@@ -33,12 +33,12 @@ Toàn bộ lab được triển khai theo ba bước liên tiếp, mỗi bước
       |  GitHub Actions kích hoạt tự động
       v
 [Runner: Unit Test -> Train -> Quality Gate (f1 >= 0.65) -> Release]
-      |                                          |
-      |  dvc pull                                |  upload model
-      v                                          v
-[Cloud Object Storage]                      [Cloud VM]
-  data/                                       income-api (FastAPI)
-  artifacts/current/                            POST /score
+      |                         |                         |
+      |  dvc pull               | approved model          | restart + health check
+      v                         v                         v
+[Cloud Object Storage] <---------------------------- [Cloud VM]
+  data/                 release promotes model       income-api (FastAPI)
+  artifacts/current/                                  POST /score
 ```
 
 Bước 1 chỉ chạy trên máy tính cá nhân. Bước 2 và Bước 3 sử dụng toàn bộ kiến trúc trên.

@@ -85,9 +85,9 @@ data: bổ sung 22361 mẫu dữ liệu mới (train_batch2)
 Theo dõi từng job:
 
 1. **Unit Test** - unit tests chạy trên code hiện tại (không thay đổi so với Bước 2).
-2. **Train** - CI runner pull tập dữ liệu mới (44.722 mẫu) từ cloud storage, huấn luyện lại mô hình, upload `model.joblib` mới lên cloud storage.
-3. **Quality Gate** - kiểm tra `f1_score >= 0.65`, nếu không đạt thì pipeline dừng tại đây.
-4. **Release** - nếu quality gate qua, service trên VM được restart với mô hình mới.
+2. **Train** - CI runner pull tập dữ liệu mới (44.722 mẫu) từ cloud storage, huấn luyện lại mô hình và lưu model thành GitHub Actions artifact.
+3. **Quality Gate** - kiểm tra `f1_score >= 0.65`, nếu không đạt thì pipeline dừng tại đây và model hiện hành trên bucket không bị ghi đè.
+4. **Release** - nếu quality gate qua, upload model đã duyệt vào `artifacts/current/model.joblib`, restart service trên VM và kiểm tra `/healthz`.
 
 ---
 
